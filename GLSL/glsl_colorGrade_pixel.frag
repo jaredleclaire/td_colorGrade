@@ -12,25 +12,25 @@ uniform float uSaturation;
 out vec4 fragColor;
 void main()
 {
-	//create vec for input texture
+	//input texture
 	vec4 color = texture(sTD2DInputs[0], vUV.st);
 	
-	//apply color temperature adjustment
+	//color temperature
 	color.r *= 1 - (uTemperature / 2);
 	color.b *= 1 + (uTemperature / 2);
 	
-	//apply magenta adjustment
+	//tint
 	color.r *= 1 + (uTint / 3);
 	color.g *= 1 - ((uTint * 2) / 3);
 	color.b *= 1 + (uTint / 3);
 	
-	//apply intensity adjustment
+	//exposure
 	color.rgb *= 1 + uExposure;
 	
-	//apply LGG
+	//LGG
 	color.rgb = pow(max(vec3(0.0), color.rgb * (1.0 + uGain - uLift) + uLift + uOffset), max(vec3(0.0), 1.0 - uGamma));
 	
-	//adjust saturation
+	//saturation
 	vec3 hsv;
 	hsv.xyz = TDRGBToHSV(color.rgb);
 	hsv.y *= uSaturation;
