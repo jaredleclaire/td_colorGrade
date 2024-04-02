@@ -37,17 +37,15 @@ class ColorGradeExt:
 		# 	items, use the Storage section of the Component Editor
 		
 		# self.stored = StorageManager(self, ownerComp, storedItems)
-
-	def myFunction(self, v):
-		debug(v)
-
-	def PromotedFunction(self, v):
-		debug(v)
 		
-	def Reset(self):
+	def ResetTMI(self):
 		parent.colorGrade.par.Temperature = 0
-		parent.colorGrade.par.Tint = 0
-		parent.colorGrade.par.Exposure = 0
+		parent.colorGrade.par.Magenta = 0
+		parent.colorGrade.par.Intensity = 0
+		
+	def ResetLGG(self):
+		parent.colorGrade.parGroup.Liftcolor = 0
+		parent.colorGrade.par.Liftlevel = 0
 		
 		parent.colorGrade.parGroup.Liftcolor = 0
 		parent.colorGrade.par.Liftlevel = 0
@@ -61,7 +59,10 @@ class ColorGradeExt:
 		parent.colorGrade.parGroup.Offsetcolor = 0
 		parent.colorGrade.par.Offsetlevel = 0
 		
+	def ResetSaturation(self):
 		parent.colorGrade.par.Saturation = 1
-
-		
-		#op('geo1').par.tx.defaultMode = ParMode.EXPRESSION
+	
+	def ResetAll(self):
+		parent.colorGrade.ResetTMI()
+		parent.colorGrade.ResetLGG()
+		parent.colorGrade.ResetSaturation()

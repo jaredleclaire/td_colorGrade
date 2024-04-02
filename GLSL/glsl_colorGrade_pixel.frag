@@ -1,8 +1,8 @@
 //a fragment shader for basic grading controls 
 
 uniform float uTemperature;
-uniform float uTint;
-uniform float uExposure;
+uniform float uMagenta;
+uniform float uIntensity;
 uniform vec3 uLift;
 uniform vec3 uGamma;
 uniform vec3 uGain;
@@ -20,12 +20,12 @@ void main()
 	color.b *= 1 + (uTemperature / 2);
 	
 	//tint
-	color.r *= 1 + (uTint / 3);
-	color.g *= 1 - ((uTint * 2) / 3);
-	color.b *= 1 + (uTint / 3);
+	color.r *= 1 + (uMagenta / 3);
+	color.g *= 1 - ((uMagenta * 2) / 3);
+	color.b *= 1 + (uMagenta / 3);
 	
 	//exposure
-	color.rgb *= 1 + uExposure;
+	color.rgb *= 1 + uIntensity;
 	
 	//LGG
 	color.rgb = pow(max(vec3(0.0), color.rgb * (1.0 + uGain - uLift) + uLift + uOffset), max(vec3(0.0), 1.0 - uGamma));
