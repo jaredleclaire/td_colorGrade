@@ -3,16 +3,11 @@
 uniform float uTemperature;
 uniform float uMagenta;
 uniform float uIntensity;
-uniform vec3 uLift;
-uniform vec3 uGamma;
-uniform vec3 uGain;
-uniform vec3 uOffset;
+uniform vec4 uLift;
+uniform vec4 uGamma;
+uniform vec4 uGain;
+uniform vec4 uOffset;
 uniform float uSaturation;
-
-//these are currently not used
-uniform vec3 uTransformMatrix0;
-uniform vec3 uTransformMatrix1;
-uniform vec3 uTransformMatrix2;
 
 out vec4 fragColor;
 
@@ -58,7 +53,23 @@ void main()
 	color.rgb = ACESccColor.rgb;
 	
 	//LGG
-	color.rgb = pow(max(vec3(0.0), color.rgb * (1.0 + uGain - uLift) + uLift + uOffset), max(vec3(0.0), 1.0 - uGamma));
+	vec3 lift = uLift.rgb;
+	float liftLevel = uLift.a;
+	lift += liftLevel;
+	
+	vec3 gamma = uGamma.rgb;
+	float gammaLevel = uGamma.a;
+	gamma += gammaLevel;
+	
+	vec3 gain = uGain.rgb;
+	float gainLevel = uGain.a;
+	gain += gainLevel;
+	
+	vec3 offset = uOffset.rgb;
+	float offsetLevel = uOffset.a;
+	offset += offsetLevel;
+	
+	color.rgb = pow(max(vec3(0.0), color.rgb * (1.0 + gain - lift) + lift + offset), max(vec3(0.0), 1.0 - gamma));
 	
 	//saturation
 	vec3 hsv;
